@@ -19,13 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <div
-          className={clsx(
-            "text-gray-500 bg-gray-800 min-h-screen",
-            robotoSlab.className
-          )}
-        >
+      <body className={robotoSlab.className}>
+        <div className={"text-gray-500 bg-gray-800 min-h-screen"}>
           <Navbar />
 
           <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8">
