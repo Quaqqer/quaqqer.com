@@ -9,6 +9,20 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      typography: ({ theme }) => ({
+        DEFAULT: {
+          css: {
+            "h1, h2, h3, h4, h5, h6": {
+              color: theme("colors.gray.100"),
+            },
+            a: {
+              color: theme("colors.blue.300"),
+              textDecorationLine: "underline",
+            },
+          },
+        },
+      }),
+
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
