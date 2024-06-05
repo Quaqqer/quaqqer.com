@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Roboto_Slab } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
-import clsx from "clsx";
 import Footer from "@/components/Footer";
 
 const robotoSlab = Roboto_Slab({ subsets: ["latin"] });

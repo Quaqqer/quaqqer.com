@@ -1,0 +1,9 @@
+import MdxLayout from "@/components/MdxLayout"
+import Hero from "@/components/Hero"
+
+export default function({children}) {
+    return <>
+        <Hero title="Projects" description="Here are some of the projects I've worked on in my free time. Some of them are just links to GitHub, but some have a demo in the browser, if you see a play button, why don't you click it?" />
+        <MdxLayout children={children} />
+    </>
+}
