@@ -1,12 +1,23 @@
 import clsx from "clsx";
-import { HTMLAttributes, Key, ReactNode } from "react";
+import Image, { StaticImageData } from "next/image";
+import { ReactNode } from "react";
 import { FaGithub, FaPlayCircle } from "react-icons/fa";
+
+import IMAGE_SAFT from "@pub/img/saft_article.jpeg";
+import IMAGE_NEMU from "@pub/img/nemu_article.jpeg";
+import IMAGE_AOC from "@pub/img/aoc_article.jpeg";
+import IMAGE_TETRIS from "@pub/img/tetris_article.jpeg";
+import IMAGE_CHIP8_JS from "@pub/img/chip8_article.jpeg";
+import IMAGE_CHIP8_RS from "@pub/img/chip8_rs_article.png";
+import IMAGE_CINEMRAFT from "@pub/img/cinemraft_article.png";
+import IMAGE_GOL from "@pub/img/gol_article.png";
+import IMAGE_SNAKE from "@pub/img/snake_article.png";
 
 export type Project = {
   name: string;
   description: string;
-  imageUrl: string;
-  imageProps?: HTMLAttributes<HTMLImageElement>;
+  image: StaticImageData;
+  imageProps?: any;
   date: string;
   href?: string;
   demo?: string;
@@ -18,7 +29,7 @@ export const projects: Project[] = [
     name: "Saft",
     description:
       "Saft is my personal programming language project. I've created a lexer, parser, compiler and bytecode vm in this project.",
-    imageUrl: "/img/saft_article.jpeg",
+    image: IMAGE_SAFT,
     date: "2023-12-22 - now",
     href: "https://github.com/Quaqqer/saft",
     github: "https://github.com/Quaqqer/saft",
@@ -27,7 +38,7 @@ export const projects: Project[] = [
     name: "Nemu",
     description:
       "A work-in-progress NES emulator. Currently the CPU is pretty complete, and graphics is the current focus.",
-    imageUrl: "/img/nemu_article.jpeg",
+    image: IMAGE_NEMU,
     date: "2023-06-05 - now",
     href: "https://github.com/Quaqqer/nemu",
     github: "https://github.com/Quaqqer/nemu",
@@ -36,7 +47,7 @@ export const projects: Project[] = [
     name: "Advent of Code",
     description:
       "I have participated in Advent of Code since the year 2019. I'm one of those people who wake up at 6 am. to finish my puzzles as quickly as possible, before going back to sleep.",
-    imageUrl: "/img/aoc_article.jpeg",
+    image: IMAGE_AOC,
     date: "2019-12-01 - now",
     href: "https://github.com/Quaqqer/aoc",
     github: "https://github.com/Quaqqer/aoc",
@@ -44,7 +55,7 @@ export const projects: Project[] = [
   {
     name: "Tetris",
     description: "The game of tetris coded up in a single evening.",
-    imageUrl: "/img/tetris_article.jpeg",
+    image: IMAGE_TETRIS,
     date: "2024-01-31",
     href: "/projects/tetris",
     demo: "/projects/tetris",
@@ -54,7 +65,7 @@ export const projects: Project[] = [
   {
     name: "CHIP-8 in JS",
     description: "A javascript implementation of a CHIP-8 emulator.",
-    imageUrl: "/img/chip8_article.jpeg",
+    image: IMAGE_CHIP8_JS,
     date: "2024-01-28",
     href: "/projects/chip8",
     demo: "/projects/chip8",
@@ -65,8 +76,8 @@ export const projects: Project[] = [
     name: "CHIP-8 in Rust",
     description:
       "A CHIP-8 emulator written in rust. CHIP-8 is an imaginary console, a popular introduction to the world of programming emulators.",
-    imageUrl: "/img/chip8_rs_article.png",
-    imageProps: { style: { imageRendering: "pixelated" } },
+    image: IMAGE_CHIP8_RS,
+    imageProps: { unoptimized: true, style: { imageRendering: "pixelated" } },
     date: "2023-06-04",
     href: "https://github.com/Quaqqer/chip8",
     github: "https://github.com/Quaqqer/chip8",
@@ -75,7 +86,7 @@ export const projects: Project[] = [
     name: "Cinemraft",
     description:
       "A simple voxel world generation with 3d rendering for the browser using three.js.",
-    imageUrl: "/img/cinemraft_article.png",
+    image: IMAGE_CINEMRAFT,
     date: "2022-10-28",
     href: "/projects/cinemraft",
     demo: "/projects/cinemraft",
@@ -86,7 +97,7 @@ export const projects: Project[] = [
     name: "Game of Life",
     description:
       "Conways game of life is popular cellular automata. I implemented it in some basic JavaScript for fun.",
-    imageUrl: "/img/gol_article.png",
+    image: IMAGE_GOL,
     date: "2022-05-18",
     href: "/projects/gol",
     demo: "/projects/gol",
@@ -96,7 +107,7 @@ export const projects: Project[] = [
   {
     name: "Snake",
     description: "A simple implementation of the snake game.",
-    imageUrl: "/img/snake_article.png",
+    image: IMAGE_SNAKE,
     date: "2022-05-17",
     href: "/projects/snake",
     demo: "/projects/snake",
@@ -105,15 +116,12 @@ export const projects: Project[] = [
   },
 ];
 
-export function ProjectCell(p: Project, key?: Key): ReactNode {
+export function ProjectCell({ p }: { p: Project }): ReactNode {
   return (
-    <div
-      className="flex flex-col items-stretch justify-between group"
-      key={key}
-    >
+    <div className="flex flex-col items-stretch justify-between group">
       <a href={p.href}>
-        <img
-          src={p.imageUrl}
+        <Image
+          src={p.image}
           alt=""
           className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2] brightness-90 group-hover:brightness-100"
           {...p.imageProps}
@@ -156,6 +164,16 @@ export function ProjectCell(p: Project, key?: Key): ReactNode {
           </p>
         </a>
       </div>
+    </div>
+  );
+}
+
+export function ProjectsGrid(): ReactNode {
+  return (
+    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-2 items-start justify-center">
+      {projects.map((project, i) => (
+        <ProjectCell p={project} key={i} />
+      ))}
     </div>
   );
 }
