@@ -141,13 +141,13 @@ export function ProjectCell({ p }: { p: Project }): ReactNode {
           <div className="flex items-center gap-x-4">
             {p.demo !== undefined && (
               <a href={p.demo}>
-                <FaPlayCircle className="h-6 w-6 text-white" />
+                <FaPlayCircle className="h-5 w-5 text-white" />
               </a>
             )}
 
             {p.github !== undefined && (
               <a href={p.github}>
-                <FaGithub className="h-5 w-5" />
+                <FaGithub className="h-5 w-5 text-white" />
               </a>
             )}
           </div>
