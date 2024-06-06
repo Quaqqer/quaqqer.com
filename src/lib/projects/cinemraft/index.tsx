@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as three from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 import {
   blockTextures,
@@ -65,7 +65,7 @@ export default function CineMraft(): JSX.Element {
 
         // Stitch chunks
         const chunk3Ds: three.Group[] = [];
-        for (const [pos, chunk] of chunks.entries()) {
+        for (const [pos, chunk] of Array.from(chunks.entries())) {
           const [cx, cz] = vec2FromKey(pos);
           const chunk3D = stitchChunk(chunk, [cx, cz], chunks, textureAtlas);
           chunk3D.position.set(cx * chunkSize, 0, cz * chunkSize);
