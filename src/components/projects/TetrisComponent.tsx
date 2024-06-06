@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import * as tetris from "@/lib/projects/tetris/tetris";
 import { assert } from "chai";
+import { useEffect, useState } from "react";
+
+import * as tetris from "@/lib/projects/tetris/tetris";
 
 export default function TetrisComponent() {
   const [canvasRef, setCanvasRef] = useState<HTMLCanvasElement | null>(null);

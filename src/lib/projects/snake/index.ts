@@ -1,7 +1,7 @@
 import { AstarBot } from "./cheat";
 import { Theme } from "./colors";
 import { GameState } from "./gamestate";
-import { TILES_H, TILES_V, Renderer } from "./renderer";
+import { Renderer, TILES_H, TILES_V } from "./renderer";
 
 export class Game {
   private renderer: Renderer;

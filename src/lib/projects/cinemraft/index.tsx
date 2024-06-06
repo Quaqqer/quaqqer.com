@@ -1,8 +1,3 @@
-import { useEffect, useRef } from "preact/hooks";
-import * as three from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { JSX } from "preact";
-
 import {
   blockTextures,
   Chunk,
@@ -13,6 +8,10 @@ import {
   vec2FromKey,
   vec2Key,
 } from "@lib/projects/cinemraft/blocks.tsx";
+import { JSX } from "preact";
+import { useEffect, useRef } from "preact/hooks";
+import * as three from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 export default function CineMraft(): JSX.Element {
   const divRef = useRef<HTMLDivElement>(null);

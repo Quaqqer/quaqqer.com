@@ -13,11 +13,11 @@ export function Navbar() {
   const pathName = usePathname();
 
   return (
-    <header className="bg-gray-900 mb-5">
+    <header className="mb-5 bg-gray-900">
       <div className="mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex h-16 items-center">
-            <div className="px-3 py-2 text-md font-medium text-gray-200">
+            <div className="text-md px-3 py-2 font-medium text-gray-200">
               Quaqqer.dev
             </div>
 

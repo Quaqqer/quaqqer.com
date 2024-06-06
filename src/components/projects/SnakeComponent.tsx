@@ -1,9 +1,10 @@
 "use client";
 
 import { assert } from "chai";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+
 import { Game } from "@/lib/projects/snake";
 import * as snakeRenderer from "@/lib/projects/snake/renderer";
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 
 export default function SnakeComponent(): ReactNode {
   const [canvasRef, setCanvasRef] = useState<HTMLCanvasElement | null>(null);

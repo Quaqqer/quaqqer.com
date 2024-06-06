@@ -1,17 +1,16 @@
-import clsx from "clsx";
-import Image, { StaticImageData } from "next/image";
-import { ReactNode } from "react";
-import { FaGithub, FaPlayCircle } from "react-icons/fa";
-
-import IMAGE_SAFT from "@pub/img/saft_article.jpeg";
-import IMAGE_NEMU from "@pub/img/nemu_article.jpeg";
 import IMAGE_AOC from "@pub/img/aoc_article.jpeg";
-import IMAGE_TETRIS from "@pub/img/tetris_article.jpeg";
 import IMAGE_CHIP8_JS from "@pub/img/chip8_article.jpeg";
 import IMAGE_CHIP8_RS from "@pub/img/chip8_rs_article.png";
 import IMAGE_CINEMRAFT from "@pub/img/cinemraft_article.png";
 import IMAGE_GOL from "@pub/img/gol_article.png";
+import IMAGE_NEMU from "@pub/img/nemu_article.jpeg";
+import IMAGE_SAFT from "@pub/img/saft_article.jpeg";
 import IMAGE_SNAKE from "@pub/img/snake_article.png";
+import IMAGE_TETRIS from "@pub/img/tetris_article.jpeg";
+import clsx from "clsx";
+import Image, { StaticImageData } from "next/image";
+import { ReactNode } from "react";
+import { FaGithub, FaPlayCircle } from "react-icons/fa";
 
 export type Project = {
   name: string;
@@ -118,12 +117,12 @@ export const projects: Project[] = [
 
 export function ProjectCell({ p }: { p: Project }): ReactNode {
   return (
-    <div className="flex flex-col items-stretch justify-between group">
+    <div className="group flex flex-col items-stretch justify-between">
       <a href={p.href}>
         <Image
           src={p.image}
           alt=""
-          className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2] brightness-90 group-hover:brightness-100"
+          className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover brightness-90 group-hover:brightness-100 sm:aspect-[2/1] lg:aspect-[3/2]"
           {...p.imageProps}
         />
       </a>
@@ -157,7 +156,7 @@ export function ProjectCell({ p }: { p: Project }): ReactNode {
           <p
             className={clsx(
               "mt-5 text-sm leading-6 text-gray-400",
-              p.href !== undefined && "group-hover:text-gray-300"
+              p.href !== undefined && "group-hover:text-gray-300",
             )}
           >
             {p.description}
@@ -170,7 +169,7 @@ export function ProjectCell({ p }: { p: Project }): ReactNode {
 
 export function ProjectsGrid(): ReactNode {
   return (
-    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-2 items-start justify-center">
+    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 items-start justify-center gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-2">
       {projects.map((project, i) => (
         <ProjectCell p={project} key={i} />
       ))}

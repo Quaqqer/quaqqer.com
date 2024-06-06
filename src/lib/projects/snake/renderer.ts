@@ -1,4 +1,4 @@
-import { Theme, darkTheme } from "./colors";
+import { darkTheme, Theme } from "./colors";
 import { GameState } from "./gamestate";
 import { Point } from "./vector";
 

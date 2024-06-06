@@ -1,7 +1,9 @@
-import ProjectTemplate from "@/components/ProjectTemplate";
-import Desc from "./desc.mdx";
 import { NextPage } from "next";
+
 import TetrisComponent from "@/components/projects/TetrisComponent";
+import ProjectTemplate from "@/components/ProjectTemplate";
+
+import Desc from "./desc.mdx";
 
 const Page: NextPage = () => {
   return (

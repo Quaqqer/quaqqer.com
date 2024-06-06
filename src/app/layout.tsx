@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Roboto_Slab } from "next/font/google";
-import "./globals.css";
-import { Navbar } from "@/components/Navbar";
+
 import Footer from "@/components/Footer";
+import { Navbar } from "@/components/Navbar";
+
+import "./globals.css";
 
 const robotoSlab = Roboto_Slab({ subsets: ["latin"] });
 
@@ -19,10 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={robotoSlab.className}>
-        <div className={"text-gray-500 bg-gray-800 min-h-screen"}>
+        <div className={"min-h-screen bg-gray-800 text-gray-500"}>
           <Navbar />
 
-          <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-8">
             {children}
           </div>
         </div>

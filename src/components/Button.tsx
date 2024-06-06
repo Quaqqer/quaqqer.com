@@ -31,7 +31,7 @@ export default function Button({
       className={clsx(
         buttonSizeClass[sz],
         buttonColors[variant],
-        "px-2 py-1 text-xs font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+        "px-2 py-1 text-xs font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2",
       )}
       {...props}
     />

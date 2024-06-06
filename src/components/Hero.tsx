@@ -40,7 +40,7 @@ export default function Hero({
         <h2
           className={clsx(
             { md: "text-2xl sm:text-4xl", lg: "text-4xl sm:text-6xl" }[size],
-            "font-bold tracking-tight text-gray-100"
+            "font-bold tracking-tight text-gray-100",
           )}
         >
           {title}
@@ -48,8 +48,8 @@ export default function Hero({
 
         <p
           className={clsx(
-            { md: "mt-4 text-md", lg: "mt-6 text-lg" }[size],
-            "text-gray-400"
+            { md: "text-md mt-4", lg: "mt-6 text-lg" }[size],
+            "text-gray-400",
           )}
         >
           {description}

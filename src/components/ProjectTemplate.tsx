@@ -10,13 +10,13 @@ export default function ProjectTemplate({
   description: ReactNode;
 }) {
   return (
-    <div className="mx-auto max-w-screen-lg mt-18">
+    <div className="mt-18 mx-auto max-w-screen-lg">
       <div className="flex flex-col items-center">
-        <h2 className="text-3xl text-gray-300 font-medium my-6">{title}</h2>
+        <h2 className="my-6 text-3xl font-medium text-gray-300">{title}</h2>
 
         {children}
 
-        <div className="py-12 max-w-xl">{description}</div>
+        <div className="max-w-xl py-12">{description}</div>
       </div>
     </div>
   );

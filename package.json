@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier src -w"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
@@ -38,7 +39,7 @@
     "typescript": "^5"
   },
   "prettier": {
-    "importOrderPlugins": [
+    "importOrderParserPlugins": [
       "typescript",
       "jsx",
       "importAssertions"

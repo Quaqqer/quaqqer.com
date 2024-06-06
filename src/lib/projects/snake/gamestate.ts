@@ -1,4 +1,4 @@
-import { Vector2, Point, Rect } from "./vector";
+import { Point, Rect, Vector2 } from "./vector";
 
 export enum Direction {
   Up,
