@@ -9,7 +9,7 @@ export default function SnakeComponent(): ReactNode {
   const [canvasRef, setCanvasRef] = useState<HTMLCanvasElement | null>(null);
   const endGame = useCallback((score: number) => {}, []);
 
-  const snake = useMemo(() => new Game(endGame), []);
+  const snake = useMemo(() => new Game(endGame), [endGame]);
 
   useEffect(() => {
     if (canvasRef !== null) {

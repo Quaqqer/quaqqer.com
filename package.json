@@ -25,13 +25,81 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.3",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.3",
     "postcss": "^8",
+    "prettier": "^3.3.1",
+    "prettier-plugin-tailwindcss": "^0.6.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "prettier": {
+    "importOrderPlugins": [
+      "typescript",
+      "jsx",
+      "importAssertions"
+    ],
+    "plugins": [
+      "@trivago/prettier-plugin-sort-imports",
+      "prettier-plugin-tailwindcss"
+    ],
+    "importOrder": [
+      "<THIRD_PARTY_MODULES>",
+      "^@/",
+      "^\\."
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "importOrderCaseInsensitive": true
+  },
+  "eslintConfig": {
+    "root": true,
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "next/core-web-vitals"
+    ],
+    "rules": {
+      "prefer-const": "warn",
+      "no-var": "warn",
+      "no-lonely-if": "warn",
+      "prefer-spread": "warn",
+      "no-async-promise-executor": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          "vars": "all",
+          "varsIgnorePattern": "^_",
+          "args": "all",
+          "argsIgnorePattern": "^_",
+          "destructuredArrayIgnorePattern": "^_",
+          "caughtErrorsIgnorePattern": "^_"
+        }
+      ],
+      "@typescript-eslint/array-type": [
+        "warn",
+        {
+          "default": "array"
+        }
+      ],
+      "@typescript-eslint/no-explicit-any": [
+        "warn",
+        {
+          "fixToUnknown": false,
+          "ignoreRestArgs": true
+        }
+      ],
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-namespace": "off",
+      "@next/next/no-img-element": "off"
+    }
   }
 }
