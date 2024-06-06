@@ -1,6 +1,6 @@
-import { GameOfLife } from "@lib/projects/gol/logic.ts";
-import { render } from "@lib/projects/gol/renderer.ts";
-import { lightTheme, Theme } from "@lib/projects/gol/theme.ts";
+import { GameOfLife } from "./logic";
+import { render } from "./renderer";
+import { lightTheme, Theme } from "./theme";
 
 export class Game {
   private gol: GameOfLife;

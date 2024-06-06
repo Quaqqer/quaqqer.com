@@ -1,3 +1,5 @@
+"use client";
+
 import { assert } from "chai";
 import { useEffect, useState } from "react";
 

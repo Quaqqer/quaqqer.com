@@ -1,0 +1,14 @@
+import MdxLayout from "@/components/MdxLayout";
+
+export default ({ children }) => <MdxLayout>{children}</MdxLayout>;
+
+### Description
+
+This is [Conways Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life),
+a cellular automaton. An interesting fact about it is that it's turing
+complete and can simulate itself. The rules for Conways Game of Life are
+very simple.
+
+- A cell dies by isolation if it has fewer than two neighbours
+- A cell dies by overpopulation if it has more than three neigbhours
+- A dead cell comes to life if it has exactly three neighbours

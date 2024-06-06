@@ -1,5 +1,5 @@
-import { GameOfLife } from "@lib/projects/gol/logic.ts";
-import { Theme } from "@lib/projects/gol/theme.ts";
+import { GameOfLife } from "./logic";
+import { Theme } from "./theme";
 
 //           x       y       width   height
 type Rect = [number, number, number, number];
