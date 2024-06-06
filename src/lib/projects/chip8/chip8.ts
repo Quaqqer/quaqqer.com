@@ -1,4 +1,4 @@
-import { assert } from "$std/assert/mod.ts";
+import { assert } from "chai";
 
 export const PIXEL_SIZE = 10;
 export const SCREEN_W = 64;
