@@ -59,17 +59,17 @@ export const projects: Project[] = [
     href: "/projects/tetris",
     demo: "/projects/tetris",
     github:
-      "https://github.com/Quaqqer/Quaqqer.dev/tree/trunk/lib/projects/chip8",
+      "https://github.com/Quaqqer/Quaqqer.com/tree/trunk/lib/projects/chip8",
   },
   {
     name: "CHIP-8 in JS",
     description: "A javascript implementation of a CHIP-8 emulator.",
     image: IMAGE_CHIP8_JS,
     date: "2024-01-28",
-    href: "/projects/chip8",
-    demo: "/projects/chip8",
+    href: "/projects/chip8_js",
+    demo: "/projects/chip8_js",
     github:
-      "https://github.com/Quaqqer/Quaqqer.dev/tree/trunk/lib/projects/chip8",
+      "https://github.com/Quaqqer/Quaqqer.com/tree/trunk/lib/projects/chip8",
   },
   {
     name: "CHIP-8 in Rust",
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     href: "/projects/cinemraft",
     demo: "/projects/cinemraft",
     github:
-      "https://github.com/Quaqqer/Quaqqer.dev/tree/trunk/lib/projects/cinemraft",
+      "https://github.com/Quaqqer/Quaqqer.com/tree/trunk/lib/projects/cinemraft",
   },
   {
     name: "Game of Life",
@@ -101,7 +101,7 @@ export const projects: Project[] = [
     href: "/projects/gol",
     demo: "/projects/gol",
     github:
-      "https://github.com/Quaqqer/Quaqqer.dev/tree/trunk/lib/projects/gol",
+      "https://github.com/Quaqqer/Quaqqer.com/tree/trunk/lib/projects/gol",
   },
   {
     name: "Snake",
@@ -111,7 +111,7 @@ export const projects: Project[] = [
     href: "/projects/snake",
     demo: "/projects/snake",
     github:
-      "https://github.com/Quaqqer/Quaqqer.dev/tree/trunk/lib/projects/snake",
+      "https://github.com/Quaqqer/Quaqqer.com/tree/trunk/lib/projects/snake",
   },
 ];
 

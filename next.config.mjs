@@ -7,7 +7,6 @@ const withMDX = createWithMdx(mdxConfig);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {typedRoutes: true},
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
 };
 

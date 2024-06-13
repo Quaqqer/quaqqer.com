@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaGithub } from "react-icons/fa";
 
@@ -18,7 +19,7 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex h-16 items-center">
             <div className="text-md px-3 py-2 font-medium text-gray-200">
-              Quaqqer.dev
+              Quaqqer.com
             </div>
 
             {navbarItems.map(([name, href], i) => {
@@ -26,16 +27,18 @@ export function Navbar() {
                 href === "/" ? pathName === "/" : pathName.startsWith(href);
 
               return (
-                <a
-                  key={i}
-                  href={href}
-                  className={clsx(
-                    "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white",
-                    current && "bg-gray-900 text-white underline",
-                  )}
-                >
-                  {name}
-                </a>
+                <Link href={href} key={i}>
+                  <a
+                    key={i}
+                    href={href}
+                    className={clsx(
+                      "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white",
+                      current && "bg-gray-900 text-white underline",
+                    )}
+                  >
+                    {name}
+                  </a>
+                </Link>
               );
             })}
           </div>
