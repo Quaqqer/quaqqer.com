@@ -11,7 +11,7 @@ generator and renderer. Generating a voxel world is simple, simply use
 some noise, I use simplex-noise, and fill the world with blocks up to a
 height that is described by the noise function of that coordinate.
 
-The trickiest thing with voxel worlds are to render them efficiently. The naive
+The trickiest thing with voxel worlds is to render them efficiently. The naive
 way to render a voxel world is to just render each cube, but since there are so
 many cubes in a world this scales very poorly. A quick and easy performance
 boost can be achieved by using instancing when rendering our cubes, which
