@@ -25,15 +25,6 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    name: "Saft",
-    description:
-      "Saft is my personal programming language project. I've created a lexer, parser, compiler and bytecode vm in this project.",
-    image: IMAGE_SAFT,
-    date: "2023-12-22 - now",
-    href: "https://github.com/Quaqqer/saft",
-    github: "https://github.com/Quaqqer/saft",
-  },
-  {
     name: "Nemu",
     description:
       "A work-in-progress NES emulator. Currently the CPU is pretty complete, and graphics is the current focus.",
@@ -41,6 +32,15 @@ export const projects: Project[] = [
     date: "2023-06-05 - now",
     href: "https://github.com/Quaqqer/nemu",
     github: "https://github.com/Quaqqer/nemu",
+  },
+  {
+    name: "Saft",
+    description:
+      "Saft is my personal programming language project. I've created a lexer, parser, compiler and bytecode vm in this project.",
+    image: IMAGE_SAFT,
+    date: "2023-12-22 - now",
+    href: "https://github.com/Quaqqer/saft",
+    github: "https://github.com/Quaqqer/saft",
   },
   {
     name: "Advent of Code",
