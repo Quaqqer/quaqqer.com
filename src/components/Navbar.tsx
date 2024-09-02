@@ -27,17 +27,15 @@ export function Navbar() {
                 href === "/" ? pathName === "/" : pathName.startsWith(href);
 
               return (
-                <Link href={href} key={i}>
-                  <a
-                    key={i}
-                    href={href}
-                    className={clsx(
-                      "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white",
-                      current && "bg-gray-900 text-white underline",
-                    )}
-                  >
-                    {name}
-                  </a>
+                <Link
+                  href={href}
+                  key={i}
+                  className={clsx(
+                    "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white",
+                    current && "bg-gray-900 text-white underline",
+                  )}
+                >
+                  {name}
                 </Link>
               );
             })}
