@@ -27,7 +27,7 @@ export const projects: Project[] = [
   {
     name: "Nemu",
     description:
-      "A work-in-progress NES emulator. Currently the CPU is pretty complete, and graphics is the current focus.",
+      "My own NES emulator! Currently it runs Super Mario Bros 1, Donkey Kong, and a few more games.",
     image: IMAGE_NEMU,
     date: "2023-06-05 - now",
     demo: "/projects/nemu",
