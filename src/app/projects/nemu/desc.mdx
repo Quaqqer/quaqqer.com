@@ -1,0 +1,35 @@
+import MdxLayout from "@/components/MdxLayout";
+
+export default ({ children }) => <MdxLayout>{children}</MdxLayout>;
+
+Select a rom to start playing.
+
+## Controls
+
+DPAD - Arrow keys \
+B - Z \
+A - X \
+Start - Enter \
+Select - Right Shift \
+
+## Description
+
+Currently only [games running on mapper
+0](https://nesdir.github.io/mapper0.html) are supported. Different game carts
+have different internal wiring which must be emulated, at the moment I have
+only implemented one type of cart. Some games that should run are Donkey Kong,
+Super Mario Bros 1, and Ice Climber.
+
+## GitHub
+
+If you would like you are more than welcome to check it out on
+[GitHub](https://github.com/quaqqer/nemu)!
+
+## Acknowledgements
+
+Thanks to:
+
+- The [NESDev wiki](https://www.nesdev.org/) for providing a reference for the NES hardware
+- Nestest for providing a great test suite for the CPU
+- [javid9x](https://www.youtube.com/@javidx9) for videos explaining how the NES PPU works
+- The wonderful people over at [r/EmuDev](https://www.reddit.com/r/EmuDev/)'s Discord.
