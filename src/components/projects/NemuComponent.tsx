@@ -2,6 +2,9 @@
 
 // import { Controller, Nemu } from "nemu";
 import { useEffect, useMemo, useState } from "react";
+import { MdFullscreen } from "react-icons/md";
+
+import Button from "../Button";
 
 const keyMap = {
   z: "b",
@@ -15,10 +18,14 @@ const keyMap = {
 } as const;
 
 export default function NemuComponent() {
+  const [romInputRef, setRomInputRef] = useState<HTMLInputElement | null>(null);
   const [canvasRef, setCanvasRef] = useState<HTMLCanvasElement | null>(null);
   const [rom, setRom] = useState<Uint8Array | undefined>();
 
   const [nemu, setNemu] = useState<typeof import("nemu") | undefined>();
+
+  const [size, setSize] = useState<1 | 2 | 3>(2);
+  const [fullscreen, setFullscreen] = useState(false);
 
   useEffect(() => {
     const f = async () => {
@@ -29,6 +36,23 @@ export default function NemuComponent() {
     f();
   });
 
+  // React to fullscreen events
+  useEffect(() => {
+    if (!canvasRef) return;
+
+    const listener = () => {
+      if (!document.fullscreenElement) setFullscreen(false);
+    };
+
+    canvasRef.addEventListener("fullscreenchange", listener);
+    canvasRef.addEventListener("fullscreenerror", listener);
+
+    return () => {
+      canvasRef.removeEventListener("fullscreenchange", listener);
+      canvasRef.removeEventListener("fullscreenerror", listener);
+    };
+  }, [canvasRef]);
+
   const emulator = useMemo(() => {
     const emu = rom ? nemu?.Nemu.new(rom) : undefined;
     if (rom && !emu)
@@ -38,6 +62,10 @@ export default function NemuComponent() {
 
     return emu;
   }, [nemu, rom]);
+
+  useEffect(() => {
+    if (canvasRef && fullscreen) canvasRef.requestFullscreen();
+  }, [canvasRef, fullscreen]);
 
   useEffect(() => {
     if (!emulator || !canvasRef || !nemu) return;
@@ -86,18 +114,12 @@ export default function NemuComponent() {
   }, [canvasRef, emulator, nemu]);
 
   return (
-    <div className="flex flex-col items-center gap-3 rounded-xl bg-gray-900 p-5">
-      <canvas
-        tabIndex={0}
-        width={256}
-        height={240}
-        ref={setCanvasRef}
-        style={{ imageRendering: "pixelated" }}
-        className="h-[480px] w-[512px] bg-black"
-      />
-
+    <div className="flex flex-col items-stretch gap-3 rounded-xl bg-gray-900 p-5">
       <input
+        ref={setRomInputRef}
+        hidden
         type="file"
+        accept=".nes"
         onChange={async (ev) => {
           const file = ev.target.files?.[0];
           if (file !== undefined) {
@@ -105,6 +127,40 @@ export default function NemuComponent() {
           }
         }}
       />
+
+      <canvas
+        tabIndex={0}
+        width={256}
+        height={240}
+        ref={setCanvasRef}
+        style={{
+          imageRendering: "pixelated",
+          width: 256 * size,
+          height: 240 * size,
+        }}
+        className="bg-black"
+      />
+
+      <div className="flex flex-row justify-between gap-5 px-5">
+        <Button
+          onClick={() => {
+            romInputRef?.click();
+          }}
+        >
+          Load ROM
+        </Button>
+
+        <div className="flex flex-row items-center gap-1">
+          {new Array(3).fill(0).map((_, i) => (
+            <button key={i} onClick={() => setSize((1 + size) as 1 | 2 | 3)}>
+              {i + 1}x
+            </button>
+          ))}
+          <button onClick={() => void setFullscreen(true)}>
+            {<MdFullscreen size={20} />}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
