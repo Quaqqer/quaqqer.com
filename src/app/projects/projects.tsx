@@ -30,7 +30,8 @@ export const projects: Project[] = [
       "A work-in-progress NES emulator. Currently the CPU is pretty complete, and graphics is the current focus.",
     image: IMAGE_NEMU,
     date: "2023-06-05 - now",
-    href: "https://github.com/Quaqqer/nemu",
+    demo: "/projects/nemu",
+    href: "/projects/nemu",
     github: "https://github.com/Quaqqer/nemu",
   },
   {
