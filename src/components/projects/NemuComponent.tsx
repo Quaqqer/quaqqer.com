@@ -14,7 +14,7 @@ const keyMap = {
   ArrowLeft: "dpad_w",
   ArrowRight: "dpad_e",
   Enter: "start",
-  ShiftRight: "select",
+  Shift: "select",
 } as const;
 
 export default function NemuComponent() {
