@@ -81,7 +81,16 @@ export default function NemuComponent() {
   }, [canvasRef, emulator, nemu]);
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-3 rounded-xl bg-gray-900 p-5">
+      <canvas
+        tabIndex={0}
+        width={256}
+        height={240}
+        ref={setCanvasRef}
+        style={{ imageRendering: "pixelated" }}
+        className="h-[480px] w-[512px] bg-black"
+      />
+
       <input
         type="file"
         onChange={async (ev) => {
@@ -90,13 +99,6 @@ export default function NemuComponent() {
             setRom(new Uint8Array(await file.arrayBuffer()));
           }
         }}
-      />
-      <canvas
-        tabIndex={0}
-        width={256}
-        height={240}
-        ref={setCanvasRef}
-        style={{ imageRendering: "pixelated", width: 512, height: 480 }}
       />
     </div>
   );
