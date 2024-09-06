@@ -29,10 +29,15 @@ export default function NemuComponent() {
     f();
   });
 
-  const emulator = useMemo(
-    () => (rom ? nemu?.Nemu.new(rom) : undefined),
-    [nemu, rom],
-  );
+  const emulator = useMemo(() => {
+    const emu = rom ? nemu?.Nemu.new(rom) : undefined;
+    if (rom && !emu)
+      alert(
+        "Failed to load rom, probably because it is using an unsupported mapper.",
+      );
+
+    return emu;
+  }, [nemu, rom]);
 
   useEffect(() => {
     if (!emulator || !canvasRef || !nemu) return;

@@ -1,0 +1,19 @@
+{
+  "name": "nemu-wasm",
+  "collaborators": [
+    "Emanuel Särnhammar <emanuel@quaqqer.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "nemu_wasm_bg.wasm",
+    "nemu_wasm.js",
+    "nemu_wasm_bg.js",
+    "nemu_wasm.d.ts"
+  ],
+  "module": "nemu_wasm.js",
+  "types": "nemu_wasm.d.ts",
+  "sideEffects": [
+    "./nemu_wasm.js",
+    "./snippets/*"
+  ]
+}
