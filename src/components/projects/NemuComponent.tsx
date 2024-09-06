@@ -79,6 +79,11 @@ export default function NemuComponent() {
         ev.preventDefault();
         controller[btn] = true;
       }
+
+      if (ev.key === "f") {
+        setFullscreen((f) => !f);
+        ev.preventDefault();
+      }
     };
     const keyUp = (ev: KeyboardEvent) => {
       const btn = keyMap[ev.key as keyof typeof keyMap];
