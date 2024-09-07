@@ -7,7 +7,7 @@ import Desc from "./desc.mdx";
 
 const Page: NextPage = () => {
   return (
-    <ProjectTemplate title="Snake" description={<Desc />}>
+    <ProjectTemplate title="Game of Life" description={<Desc />}>
       <GolComponent />
     </ProjectTemplate>
   );
