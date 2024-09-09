@@ -157,7 +157,7 @@ export default function NemuComponent() {
 
         <div className="flex flex-row items-center gap-1">
           {new Array(3).fill(0).map((_, i) => (
-            <button key={i} onClick={() => setSize((1 + size) as 1 | 2 | 3)}>
+            <button key={i} onClick={() => setSize((1 + i) as 1 | 2 | 3)}>
               {i + 1}x
             </button>
           ))}
