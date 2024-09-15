@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { Metadata } from "next";
 import { Roboto_Slab } from "next/font/google";
 
@@ -20,8 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={robotoSlab.className}>
-        <div className={"min-h-screen bg-gray-800 text-gray-500"}>
+      <body className={clsx(robotoSlab.className, "bg-gray-900 text-gray-500")}>
+        <div className="min-h-screen">
           <Navbar />
 
           <div className="mx-auto max-w-screen-lg px-4 sm:px-6 lg:px-8">
