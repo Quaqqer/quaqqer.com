@@ -31,7 +31,7 @@ export default function GameOfLifeComponent(): JSX.Element {
     }, 1000);
 
     return () => void clearInterval(interval);
-  }, [gol, canvasRef]);
+  }, [gol, canvasRef, paused.value]);
 
   return (
     <div>
