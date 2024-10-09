@@ -2,7 +2,7 @@
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
 export function __wbg_nemu_free(a: number, b: number): void;
-export function nemu_new(a: number, b: number): number;
+export function nemu_new(a: number, b: number, c: number): void;
 export function nemu_next_frame(a: number, b: number): void;
 export function nemu_update_controller(a: number, b: number): void;
 export function __wbg_controller_free(a: number, b: number): void;
@@ -24,7 +24,7 @@ export function __wbg_get_controller_b(a: number): number;
 export function __wbg_set_controller_b(a: number, b: number): void;
 export function controller_new(): number;
 export function set_panic_hook(): void;
-export function __wbindgen_malloc(a: number, b: number): number;
 export function __wbindgen_add_to_stack_pointer(a: number): number;
+export function __wbindgen_malloc(a: number, b: number): number;
 export function __wbindgen_free(a: number, b: number, c: number): void;
 export function __wbindgen_realloc(a: number, b: number, c: number, d: number): number;

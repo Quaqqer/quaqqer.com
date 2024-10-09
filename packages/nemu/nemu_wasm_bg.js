@@ -44,6 +44,15 @@ function getStringFromWasm0(ptr, len) {
     return cachedTextDecoder.decode(getUint8ArrayMemory0().subarray(ptr, ptr + len));
 }
 
+function addHeapObject(obj) {
+    if (heap_next === heap.length) heap.push(heap.length + 1);
+    const idx = heap_next;
+    heap_next = heap[idx];
+
+    heap[idx] = obj;
+    return idx;
+}
+
 let WASM_VECTOR_LEN = 0;
 
 function passArray8ToWasm0(arg, malloc) {
@@ -77,15 +86,6 @@ function _assertClass(instance, klass) {
 */
 export function set_panic_hook() {
     wasm.set_panic_hook();
-}
-
-function addHeapObject(obj) {
-    if (heap_next === heap.length) heap.push(heap.length + 1);
-    const idx = heap_next;
-    heap_next = heap[idx];
-
-    heap[idx] = obj;
-    return idx;
 }
 
 const lTextEncoder = typeof TextEncoder === 'undefined' ? (0, module.require)('util').TextEncoder : TextEncoder;
@@ -304,13 +304,24 @@ export class Nemu {
     }
     /**
     * @param {Uint8Array} bin
-    * @returns {Nemu | undefined}
+    * @returns {Nemu}
     */
     static new(bin) {
-        const ptr0 = passArray8ToWasm0(bin, wasm.__wbindgen_malloc);
-        const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.nemu_new(ptr0, len0);
-        return ret === 0 ? undefined : Nemu.__wrap(ret);
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passArray8ToWasm0(bin, wasm.__wbindgen_malloc);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.nemu_new(retptr, ptr0, len0);
+            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return Nemu.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
     }
     /**
     * @returns {Uint8Array}
@@ -337,6 +348,15 @@ export class Nemu {
     }
 }
 
+export function __wbindgen_object_drop_ref(arg0) {
+    takeObject(arg0);
+};
+
+export function __wbindgen_string_new(arg0, arg1) {
+    const ret = getStringFromWasm0(arg0, arg1);
+    return addHeapObject(ret);
+};
+
 export function __wbg_new_abda76e883ba8a5f() {
     const ret = new Error();
     return addHeapObject(ret);
@@ -360,10 +380,6 @@ export function __wbg_error_f851667af71bcfc6(arg0, arg1) {
     } finally {
         wasm.__wbindgen_free(deferred0_0, deferred0_1, 1);
     }
-};
-
-export function __wbindgen_object_drop_ref(arg0) {
-    takeObject(arg0);
 };
 
 export function __wbindgen_throw(arg0, arg1) {

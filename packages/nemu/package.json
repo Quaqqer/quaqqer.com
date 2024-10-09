@@ -1,5 +1,6 @@
 {
   "name": "nemu-wasm",
+  "type": "module",
   "collaborators": [
     "Emanuel Särnhammar <emanuel@quaqqer.com>"
   ],
@@ -10,7 +11,7 @@
     "nemu_wasm_bg.js",
     "nemu_wasm.d.ts"
   ],
-  "module": "nemu_wasm.js",
+  "main": "nemu_wasm.js",
   "types": "nemu_wasm.d.ts",
   "sideEffects": [
     "./nemu_wasm.js",

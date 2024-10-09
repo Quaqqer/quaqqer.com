@@ -41,9 +41,9 @@ export class Nemu {
   free(): void;
 /**
 * @param {Uint8Array} bin
-* @returns {Nemu | undefined}
+* @returns {Nemu}
 */
-  static new(bin: Uint8Array): Nemu | undefined;
+  static new(bin: Uint8Array): Nemu;
 /**
 * @returns {Uint8Array}
 */

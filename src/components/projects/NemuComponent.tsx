@@ -54,11 +54,19 @@ export default function NemuComponent() {
   }, [canvasRef]);
 
   const emulator = useMemo(() => {
-    const emu = rom ? nemu?.Nemu.new(rom) : undefined;
-    if (rom && !emu)
-      alert(
-        "Failed to load rom, probably because it is using an unsupported mapper.",
-      );
+    let emu: import("nemu").Nemu | undefined = undefined;
+
+    if (rom) {
+      try {
+        emu = nemu?.Nemu.new(rom);
+      } catch (e) {
+        if (typeof e == "string") {
+          alert(`Failed to load rom: ${e}`);
+        } else {
+          throw e;
+        }
+      }
+    }
 
     return emu;
   }, [nemu, rom]);
