@@ -9,7 +9,10 @@ const withMDX = createWithMdx(mdxConfig);
 const nextConfig = {
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   webpack: function (config, options) {
-    config.experiments = { syncWebAssembly: true, layers: true };
+    config.experiments = {
+      syncWebAssembly: true,
+      layers: true,
+    };
     return config;
   },
 };

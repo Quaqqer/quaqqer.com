@@ -1,10 +1,15 @@
 "use client";
 
 // import { Controller, Nemu } from "nemu";
+import initNemu, { Controller, Nemu } from "nemu";
 import { useEffect, useMemo, useState } from "react";
 import { MdFullscreen } from "react-icons/md";
 
 import Button from "../Button";
+
+if (typeof window !== "undefined") {
+  await initNemu("/nemu_wasm_bg.wasm");
+}
 
 const keyMap = {
   z: "b",
@@ -22,19 +27,8 @@ export default function NemuComponent() {
   const [canvasRef, setCanvasRef] = useState<HTMLCanvasElement | null>(null);
   const [rom, setRom] = useState<Uint8Array | undefined>();
 
-  const [nemu, setNemu] = useState<typeof import("nemu") | undefined>();
-
   const [size, setSize] = useState<1 | 2 | 3>(2);
   const [fullscreen, setFullscreen] = useState(false);
-
-  useEffect(() => {
-    const f = async () => {
-      const nemu = await import("nemu");
-      nemu.set_panic_hook();
-      setNemu(nemu);
-    };
-    f();
-  });
 
   // React to fullscreen events
   useEffect(() => {
@@ -58,7 +52,7 @@ export default function NemuComponent() {
 
     if (rom) {
       try {
-        emu = nemu?.Nemu.new(rom);
+        emu = Nemu.new(rom);
       } catch (e) {
         if (typeof e == "string") {
           alert(`Failed to load rom: ${e}`);
@@ -69,16 +63,16 @@ export default function NemuComponent() {
     }
 
     return emu;
-  }, [nemu, rom]);
+  }, [rom]);
 
   useEffect(() => {
     if (canvasRef && fullscreen) canvasRef.requestFullscreen();
   }, [canvasRef, fullscreen]);
 
   useEffect(() => {
-    if (!emulator || !canvasRef || !nemu) return;
+    if (!emulator || !canvasRef) return;
 
-    const controller = new nemu.Controller();
+    const controller = new Controller();
 
     const keyDown = (ev: KeyboardEvent) => {
       const btn = keyMap[ev.key as keyof typeof keyMap];
@@ -124,7 +118,7 @@ export default function NemuComponent() {
       canvasRef.removeEventListener("keyup", keyUp);
       clearInterval(interval);
     };
-  }, [canvasRef, emulator, nemu]);
+  }, [canvasRef, emulator]);
 
   return (
     <div className="flex flex-col items-stretch gap-3 rounded-xl bg-gray-900 p-5">

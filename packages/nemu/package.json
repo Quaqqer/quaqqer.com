@@ -8,13 +8,11 @@
   "files": [
     "nemu_wasm_bg.wasm",
     "nemu_wasm.js",
-    "nemu_wasm_bg.js",
     "nemu_wasm.d.ts"
   ],
   "main": "nemu_wasm.js",
   "types": "nemu_wasm.d.ts",
   "sideEffects": [
-    "./nemu_wasm.js",
     "./snippets/*"
   ]
 }

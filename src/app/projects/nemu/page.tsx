@@ -1,6 +1,8 @@
 import { NextPage } from "next";
+import React from "react";
 
-import NemuComponent from "@/components/projects/NemuComponent";
+const NemuComponent  = React.lazy(() => import ("@/components/projects/NemuComponent"));
+
 import ProjectTemplate from "@/components/ProjectTemplate";
 
 import Desc from "./desc.mdx";
