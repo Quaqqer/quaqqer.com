@@ -145,7 +145,7 @@ export default function NemuComponent() {
           width: 256 * size,
           height: 240 * size,
         }}
-        className="bg-black"
+        className="bg-black outline-none"
       />
 
       <div className="flex flex-row justify-between gap-5 px-5">
