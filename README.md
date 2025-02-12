@@ -17,5 +17,5 @@ The deployment of Nemu is a bit cursed. The current version of webpack is
 incompatible with wasm generated with wasm pack. My current solution is to
 generate wasm for the esmodules and fetch the wasm file from the public
 directory. Therefore, I need a copy of the .wasm-file in the public directory.
-Note to self: Update both wasm-files when updating nemu.
-
+Note to self: Update both wasm-files when updating nemu. The wasm is generated
+with `wasm-pack build --target web`.
