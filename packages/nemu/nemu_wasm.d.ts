@@ -26,8 +26,8 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly __wbg_nemu_free: (a: number, b: number) => void;
-  readonly nemu_new: (a: number, b: number) => [number, number, number];
-  readonly nemu_next_frame: (a: number) => [number, number];
+  readonly nemu_new: (a: number, b: number, c: number) => void;
+  readonly nemu_next_frame: (a: number, b: number) => void;
   readonly nemu_update_controller: (a: number, b: number) => void;
   readonly __wbg_controller_free: (a: number, b: number) => void;
   readonly __wbg_get_controller_dpad_n: (a: number) => number;
@@ -51,9 +51,7 @@ export interface InitOutput {
   readonly __wbindgen_free: (a: number, b: number, c: number) => void;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
   readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
-  readonly __wbindgen_export_3: WebAssembly.Table;
-  readonly __externref_table_dealloc: (a: number) => void;
-  readonly __wbindgen_start: () => void;
+  readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;
