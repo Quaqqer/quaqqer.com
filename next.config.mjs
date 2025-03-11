@@ -1,9 +1,6 @@
 import createWithMdx from "@next/mdx";
 
-/** @type {import("@next/mdx").NextMDXOptions} */
-const mdxConfig = {};
-
-const withMDX = createWithMdx(mdxConfig);
+const withMDX = createWithMdx({ extension: /\.mdx?$/ });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
