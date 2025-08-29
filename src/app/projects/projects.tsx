@@ -52,6 +52,16 @@ export const projects: Project[] = [
     github: "https://github.com/Quaqqer/aoc",
   },
   {
+    name: "Sudoku",
+    description: "A sudoku game with a solver",
+    image: IMAGE_TETRIS,
+    date: "2025-09-01",
+    href: "/projects/sudoku",
+    demo: "/projects/sudoku",
+    github:
+      "https://github.com/Quaqqer/Quaqqer.com/tree/trunk/lib/projects/sudoku",
+  },
+  {
     name: "Tetris",
     description: "The game of tetris coded up in a single evening.",
     image: IMAGE_TETRIS,
