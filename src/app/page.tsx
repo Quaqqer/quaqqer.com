@@ -1,6 +1,6 @@
 import MdxLayout from "@/components/MdxLayout";
 
-import Content from "./content.md";
+import Content from "./content.mdx";
 
 export default function Page() {
   return (
