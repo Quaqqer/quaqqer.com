@@ -60,7 +60,7 @@ export class SudokuState {
       this.locked,
       this.annotations.with(
         i,
-        this.annotations[i].with(value, !this.annotations[i][value]),
+        this.annotations[i].with(value - 1, !this.annotations[i][value - 1]),
       ),
     );
   }

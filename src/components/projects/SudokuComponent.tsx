@@ -57,19 +57,21 @@ export const SudokuComponent: FC = () => {
           )}
           onClick={() => void setSelectedTile(tileI)}
         >
+          {value === undefined && (
+            <div className="absolute grid h-full w-full grid-cols-3 grid-rows-3">
+              {TILE_VALUES.map((value) => (
+                <div key={value}>{annotations[value - 1] && value}</div>
+              ))}
+            </div>
+          )}
+
           <div
             className={clsx(
-              "absolute flex h-full w-full items-center justify-center text-3xl text-black",
+              "flex h-full w-full items-center justify-center text-3xl text-black",
               locked && "font-bold",
             )}
           >
             {value}
-          </div>
-
-          <div className="grid h-full w-full grid-cols-3 grid-rows-3">
-            {TILE_VALUES.map((value) => (
-              <div key={value}>{annotations[value] && value}</div>
-            ))}
           </div>
         </button>
       );
