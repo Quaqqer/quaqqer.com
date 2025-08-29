@@ -140,3 +140,9 @@ export class SudokuState {
     return !this.hasError();
   }
 }
+
+function solveSudoku(
+  tiles: readonly (SudokuValue | undefined)[],
+): readonly SudokuValue[] | undefined {
+  return undefined;
+}
