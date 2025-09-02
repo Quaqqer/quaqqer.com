@@ -5,6 +5,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 
 import {
+  generateSudoku,
   SudokuState,
   SudokuValue,
   TILE_VALUES,
@@ -13,20 +14,21 @@ import {
 export const SudokuComponent: FC = () => {
   const [sudoku, setSudoku] = useState(() => {
     const _ = undefined;
-    // prettier-ignore
-    return SudokuState.fromPreset([
-      _, _, _,  1, 5, _,  6, _, 0,
-      5, 7, _,  _, 6, _,  _, 8, _,
-      0, 8, _,  _, _, 3,  4, _, _,
-
-      7, 1, _,  0, _, _,  _, 3, _,
-      _, _, 3,  5, _, 1,  8, _, _,
-      _, 4, _,  _, _, 2,  _, 1, 7,
-
-      _, _, 8,  2, _, _,  _, 6, 3,
-      _, 3, _,  _, 4, _,  _, 2, 5,
-      6, _, 2,  _, 0, 7,  _, _, _,
-    ]);
+    return SudokuState.empty();
+    // // prettier-ignore
+    // return SudokuState.fromPreset([
+    //   _, _, _,  1, 5, _,  6, _, 0,
+    //   5, 7, _,  _, 6, _,  _, 8, _,
+    //   0, 8, _,  _, _, 3,  4, _, _,
+    //
+    //   7, 1, _,  0, _, _,  _, 3, _,
+    //   _, _, 3,  5, _, 1,  8, _, _,
+    //   _, 4, _,  _, _, 2,  _, 1, 7,
+    //
+    //   _, _, 8,  2, _, _,  _, 6, 3,
+    //   _, 3, _,  _, 4, _,  _, 2, 5,
+    //   6, _, 2,  _, 0, 7,  _, _, _,
+    // ]);
   });
   const warnings = sudoku.erroneousTiles();
   const [selectedTile, setSelectedTile] = useState<number | undefined>(
@@ -171,8 +173,14 @@ export const SudokuComponent: FC = () => {
           <CiEdit />
         </button>
 
-        <button onClick={() => setSudoku((sudoku) => sudoku.cheat() ?? sudoku)}>
+        <button onClick={() => setSudoku((sudoku) => sudoku.solve() ?? sudoku)}>
           Solve
+        </button>
+
+        <button
+          onClick={() => setSudoku((sudoku) => generateSudoku() ?? sudoku)}
+        >
+          Randomize
         </button>
 
         <button onClick={() => setSudoku((sudoku) => sudoku.reset())}>
@@ -185,7 +193,7 @@ export const SudokuComponent: FC = () => {
             className="relative m-1 flex h-12 w-12 items-center justify-center rounded-md bg-gray-500 text-3xl text-white"
             onClick={() => void toggleTile(value)}
           >
-            {value}
+            {value + 1}
           </button>
         ))}
       </div>

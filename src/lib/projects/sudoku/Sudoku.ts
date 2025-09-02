@@ -38,6 +38,14 @@ export class SudokuState {
     return SudokuState.fromPreset(new Array(81).fill(undefined));
   }
 
+  public lock(): SudokuState {
+    return new SudokuState(
+      this.tiles,
+      this.tiles.map((tile) => tile !== undefined),
+      this.annotations,
+    );
+  }
+
   public setValue(
     i: number,
     value: SudokuValue | undefined,
@@ -290,7 +298,7 @@ export class SudokuState {
     );
   }
 
-  cheat(): SudokuState | undefined {
+  solve(): SudokuState | undefined {
     const [assignments, clauses] = this.encodeSAT();
 
     const newAssignments = Sat.dpll(assignments, clauses);
@@ -305,3 +313,29 @@ export class SudokuState {
     );
   }
 }
+
+export const generateSudoku = (): SudokuState => {
+  let state: SudokuState;
+  let attempts = 0;
+  while (true) {
+    attempts += 1;
+    // Generate a sudoku that is solved
+    state = SudokuState.empty();
+    for (let i = 0; i < 10; i++) {
+      const cell = Math.floor(Math.random() * 9 * 9);
+      const value = Math.floor(Math.random() * 9) as SudokuValue;
+      state = state.setValue(cell, value)!;
+    }
+
+    const solved = state.solve();
+    if (solved === undefined) continue;
+
+    state = solved;
+
+    break;
+  }
+
+  console.log(attempts);
+
+  return state;
+};
