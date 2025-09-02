@@ -1,5 +1,3 @@
-import assert from "assert";
-
 import * as Sat from "@/lib/sat";
 
 export const TILE_VALUES: SudokuValue[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -152,48 +150,46 @@ export class SudokuState {
     return !this.hasError();
   }
 
-  private encodeSAT(): [Sat.Assignments, Sat.Clause[]] {
-    const varI = (row: number, col: number, value: number): number => {
-      assert(row < 9 && col < 9 && value < 9);
-      return (row * 9 + col) * 9 + value;
-    };
+  reset(): SudokuState {
+    return new SudokuState(
+      this.tiles.map((value, i) => (this.locked[i] ? value : undefined)),
+      this.locked,
+      new Array(81).fill(new Array(9).fill(false)),
+    );
+  }
 
-    // Create assignments
-    const variables = new Array(9 * 9 * 9).fill(undefined);
-    for (let row = 0; row < 9; row++) {
-      for (let col = 0; col < 9; col++) {
-        const value = this.tiles[row * 9 + col];
+  *solve(): Generator<SudokuState, void> {
+    const solver = new Sat.SatSolver();
 
-        if (value !== undefined) {
-          for (let notValue = 0; notValue < 9; notValue++) {
-            variables[varI(row, col, notValue)] = false;
-          }
-          variables[varI(row, col, value)] = true;
-        }
-      }
+    const vars: number[] = [];
+    for (let i = 0; i < 9 * 9 * 9; i++) {
+      vars.push(solver.addVariable());
     }
 
-    const clauses = new Array<Sat.Clause>();
-    // Encode constraints
-    const hasDigit = (row: number, col: number): void => {
-      clauses.push(
-        new Map(TILE_VALUES.map((value) => [varI(row, col, value), false])),
-      );
+    const getVar = (row: number, col: number, value: number): number => {
+      return vars[(row * 9 + col) * 9 + value];
     };
+
+    // Encode constraints
+    const hasValue = (row: number, col: number, value: number): void => {
+      solver.addClause([[getVar(row, col, value), false]]);
+    };
+
+    const hasDigit = (row: number, col: number): void => {
+      solver.addClause(TILE_VALUES.map((v) => [getVar(row, col, v), false]));
+    };
+
     const singleDigit = (row: number, col: number): void => {
-      for (const v1 of TILE_VALUES) {
-        for (const v2 of TILE_VALUES) {
-          if (v1 !== v2) {
-            clauses.push(
-              new Map([
-                [varI(row, col, v1), true],
-                [varI(row, col, v2), true],
-              ]),
-            );
-          }
+      for (let v1 = 0; v1 < 9; v1++) {
+        for (let v2 = v1 + 1; v2 < 9; v2++) {
+          solver.addClause([
+            [getVar(row, col, v1), true],
+            [getVar(row, col, v2), true],
+          ]);
         }
       }
     };
+
     const differ = (
       rowA: number,
       colA: number,
@@ -201,18 +197,21 @@ export class SudokuState {
       colB: number,
     ): void => {
       for (const value of TILE_VALUES) {
-        clauses.push(
-          new Map([
-            [varI(rowA, colA, value), true],
-            [varI(rowB, colB, value), true],
-          ]),
-        );
+        solver.addClause([
+          [getVar(rowA, colA, value), true],
+          [getVar(rowB, colB, value), true],
+        ]);
       }
     };
 
     // All cells must have a value, and at most one value.
     for (let row = 0; row < 9; row++) {
       for (let col = 0; col < 9; col++) {
+        const currentValue = this.tiles[row * 9 + col];
+        if (currentValue !== undefined) {
+          hasValue(row, col, currentValue);
+        }
+
         hasDigit(row, col);
         singleDigit(row, col);
       }
@@ -260,55 +259,29 @@ export class SudokuState {
       }
     }
 
-    return [variables, clauses];
-  }
+    for (const solution of solver.solveDpll()) {
+      const tiles = new Array(81).fill(undefined);
 
-  private static decodeSAT(assignments: Sat.Assignments): SudokuValue[] {
-    const varI = (row: number, col: number, value: number): number => {
-      return (row * 9 + col) * 9 + value;
-    };
+      for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+          for (let value = 0; value < 9; value++) {
+            const hasValue = solution[getVar(row, col, value)];
 
-    const tiles = new Array(81).fill(undefined);
+            if (hasValue === true) {
+              if (tiles[row * 9 + col] !== undefined) {
+                throw Error(
+                  "Cannot have multiple values per cell... Propagation must have gone weird.",
+                );
+              }
 
-    for (let row = 0; row < 9; row++) {
-      for (let col = 0; col < 9; col++) {
-        for (let value = 0; value < 9; value++) {
-          const hasValue = assignments[varI(row, col, value)];
-          if (hasValue) {
-            if (tiles[row * 9 + col] !== undefined) {
-              throw Error(
-                "Cannot have multiple values per cell... Propagation must have gone weird.",
-              );
+              tiles[row * 9 + col] = value;
             }
-
-            tiles[row * 9 + col] = value;
           }
         }
       }
+
+      yield new SudokuState(tiles, this.locked, this.annotations);
     }
-
-    return tiles;
-  }
-
-  reset(): SudokuState {
-    return new SudokuState(
-      this.tiles.map((value, i) => (this.locked[i] ? value : undefined)),
-      this.locked,
-      new Array(81).fill(new Array(9).fill(false)),
-    );
-  }
-
-  *solve(): Generator<SudokuState, void> {
-    const [assignments, clauses] = this.encodeSAT();
-
-    yield* Sat.dpll(assignments, clauses).map(
-      (solution) =>
-        new SudokuState(
-          SudokuState.decodeSAT(solution),
-          this.locked,
-          this.annotations,
-        ),
-    );
   }
 
   toString(): string {
