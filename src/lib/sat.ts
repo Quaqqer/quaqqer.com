@@ -127,14 +127,14 @@ function assignPure(
   return [assignments, clauses.filter((clause) => clause !== undefined)];
 }
 
-export function dpll(
+export function* dpll(
   assignments: Assignments,
   clauses: readonly Clause[],
-): Assignments | undefined {
+): Generator<Assignments, void> {
   let result = binaryConstraintPropagation(assignments, clauses);
 
   if (result === undefined) {
-    return undefined;
+    return;
   }
 
   [assignments, clauses] = result;
@@ -142,7 +142,8 @@ export function dpll(
   [assignments, clauses] = assignPure(assignments, clauses);
 
   if (clauses.length === 0) {
-    return assignments;
+    yield assignments;
+    return;
   }
 
   const variable = assignments.findIndex((v) => v === undefined);
@@ -152,6 +153,6 @@ export function dpll(
   );
 
   const dpllTrue = dpll(assignments.with(variable, true), clauses);
-  if (dpllTrue !== undefined) return dpllTrue;
-  return dpll(assignments.with(variable, false), clauses);
+  if (dpllTrue !== undefined) yield* dpllTrue;
+  yield* dpll(assignments.with(variable, false), clauses);
 }

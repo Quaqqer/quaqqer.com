@@ -162,40 +162,54 @@ export const SudokuComponent: FC = () => {
     <div className="flex flex-col items-center">
       <SudokuBoard />
 
-      <div className="flex flex-row">
-        <button
-          className={clsx(
-            "m-1 mr-2 flex h-12 w-12 items-center justify-center rounded-md text-3xl text-white",
-            annotationMode ? "bg-gray-700" : "bg-gray-500",
-          )}
-          onClick={() => void setAnnotationMode((mode) => !mode)}
-        >
-          <CiEdit />
-        </button>
+      <div className="mt-3 flex flex-col items-center space-y-2">
+        <div className="flex flex-row space-x-2">
+          {TILE_VALUES.map((value) => (
+            <button
+              key={value}
+              className="relative flex h-12 w-12 items-center justify-center rounded-md bg-gray-500 text-3xl text-white"
+              onClick={() => void toggleTile(value)}
+            >
+              {value + 1}
+            </button>
+          ))}
+        </div>
 
-        <button onClick={() => setSudoku((sudoku) => sudoku.solve() ?? sudoku)}>
-          Solve
-        </button>
-
-        <button
-          onClick={() => setSudoku((sudoku) => generateSudoku() ?? sudoku)}
-        >
-          Randomize
-        </button>
-
-        <button onClick={() => setSudoku((sudoku) => sudoku.reset())}>
-          Reset
-        </button>
-
-        {TILE_VALUES.map((value) => (
+        <div className="flex flex-row items-stretch space-x-2">
           <button
-            key={value}
-            className="relative m-1 flex h-12 w-12 items-center justify-center rounded-md bg-gray-500 text-3xl text-white"
-            onClick={() => void toggleTile(value)}
+            className={clsx(
+              "flex h-12 w-12 items-center justify-center rounded-md text-3xl text-white",
+              annotationMode ? "bg-gray-700" : "bg-gray-500",
+            )}
+            onClick={() => void setAnnotationMode((mode) => !mode)}
+            aria-label="Annotation mode"
           >
-            {value + 1}
+            <CiEdit />
           </button>
-        ))}
+
+          <button
+            className="text-3-xl rounded-md bg-gray-500 px-3 text-white"
+            onClick={() =>
+              setSudoku((sudoku) => sudoku.solve().next().value ?? sudoku)
+            }
+          >
+            Solve
+          </button>
+
+          <button
+            className="text-3-xl rounded-md bg-gray-500 px-3 text-white"
+            onClick={() => setSudoku((sudoku) => generateSudoku() ?? sudoku)}
+          >
+            Randomize
+          </button>
+
+          <button
+            onClick={() => setSudoku((sudoku) => sudoku.reset())}
+            className="text-3-xl rounded-md bg-gray-500 px-3 text-white"
+          >
+            Reset
+          </button>
+        </div>
       </div>
     </div>
   );

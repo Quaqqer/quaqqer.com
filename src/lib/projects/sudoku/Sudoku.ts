@@ -298,19 +298,29 @@ export class SudokuState {
     );
   }
 
-  solve(): SudokuState | undefined {
+  *solve(): Generator<SudokuState, void> {
     const [assignments, clauses] = this.encodeSAT();
 
-    const newAssignments = Sat.dpll(assignments, clauses);
-    if (newAssignments === undefined) {
-      return undefined;
-    }
-
-    return new SudokuState(
-      SudokuState.decodeSAT(newAssignments),
-      this.locked,
-      this.annotations,
+    yield* Sat.dpll(assignments, clauses).map(
+      (solution) =>
+        new SudokuState(
+          SudokuState.decodeSAT(solution),
+          this.locked,
+          this.annotations,
+        ),
     );
+  }
+
+  toString(): string {
+    const buf = new Array<string>();
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        const i = row * 9 + col;
+        buf.push(this.tiles[i] !== undefined ? String(this.tiles[i] + 1) : "_");
+      }
+      buf.push("\n");
+    }
+    return buf.join("");
   }
 }
 
@@ -327,7 +337,7 @@ export const generateSudoku = (): SudokuState => {
       state = state.setValue(cell, value)!;
     }
 
-    const solved = state.solve();
+    const solved = state.solve().next().value;
     if (solved === undefined) continue;
 
     state = solved;
@@ -335,7 +345,25 @@ export const generateSudoku = (): SudokuState => {
     break;
   }
 
-  console.log(attempts);
+  const hasOneSolution = (state: SudokuState): boolean => {
+    const solutions = state.solve().take(2).toArray();
+    return solutions.length === 1;
+  };
 
-  return state;
+  const removeOrder = new Array(81).fill(0).map((_, i) => i);
+  for (let i = 0; i < removeOrder.length; i++) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = removeOrder[i];
+    removeOrder[i] = removeOrder[j];
+    removeOrder[j] = temp;
+  }
+
+  for (const toRemove of removeOrder) {
+    let potentialState = state.setValue(toRemove, undefined)!;
+    if (hasOneSolution(potentialState)) {
+      state = potentialState;
+    }
+  }
+
+  return state.lock();
 };
