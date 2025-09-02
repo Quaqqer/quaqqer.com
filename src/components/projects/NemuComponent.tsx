@@ -104,7 +104,7 @@ export default function NemuComponent() {
 
       const imageBuf = emulator.next_frame();
       const imageData = new ImageData(
-        new Uint8ClampedArray(imageBuf.buffer),
+        new Uint8ClampedArray(imageBuf.buffer as ArrayBuffer),
         256,
         240,
       );
