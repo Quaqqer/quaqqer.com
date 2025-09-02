@@ -1,14 +1,24 @@
 import { NextPage } from "next";
 
 import SnakeComponent from "@/components/projects/SnakeComponent";
-import ProjectTemplate from "@/components/ProjectTemplate";
+import {
+  ProjectDescription,
+  ProjectTemplate,
+  ProjectTitle,
+} from "@/components/ProjectTemplate";
 
 import Desc from "./desc.mdx";
 
 const Page: NextPage = () => {
   return (
-    <ProjectTemplate title="Snake" description={<Desc />}>
+    <ProjectTemplate>
+      <ProjectTitle>Snake</ProjectTitle>
+
       <SnakeComponent />
+
+      <ProjectDescription>
+        <Desc />
+      </ProjectDescription>
     </ProjectTemplate>
   );
 };

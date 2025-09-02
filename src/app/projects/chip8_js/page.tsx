@@ -1,14 +1,24 @@
 import { NextPage } from "next";
 
 import Chip8JSComponent from "@/components/projects/Chip8JSComponent";
-import ProjectTemplate from "@/components/ProjectTemplate";
+import {
+  ProjectDescription,
+  ProjectTemplate,
+  ProjectTitle,
+} from "@/components/ProjectTemplate";
 
 import Desc from "./desc.mdx";
 
 const Page: NextPage = () => {
   return (
-    <ProjectTemplate title="Chip8" description={<Desc />}>
+    <ProjectTemplate>
+      <ProjectTitle>Chip8</ProjectTitle>
+
       <Chip8JSComponent />
+
+      <ProjectDescription>
+        <Desc />
+      </ProjectDescription>
     </ProjectTemplate>
   );
 };

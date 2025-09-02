@@ -1,5 +1,3 @@
-import MdxLayout from "@/components/MdxLayout";
-
 import Content from "./content.mdx";
 
 export default function Page() {
@@ -11,9 +9,9 @@ export default function Page() {
             Quaqqer.com
           </h2>
 
-          <MdxLayout className="mx-auto mt-20 max-w-2xl">
+          <div className="prose prose-invert mx-auto mt-20 max-w-2xl">
             <Content />
-          </MdxLayout>
+          </div>
         </div>
       </div>
     </>

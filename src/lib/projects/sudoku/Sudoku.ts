@@ -144,7 +144,7 @@ export class SudokuState {
     return !this.hasError();
   }
 
-  private encodeSAT(): [Assignments, Clause[]] {
+  private encodeSAT(): [Sat.Assignments, Sat.Clause[]] {
     const varI = (row: number, col: number, value: number): number => {
       assert(row < 9 && col < 9 && value < 9);
       return (row * 9 + col) * 9 + value;
@@ -165,7 +165,7 @@ export class SudokuState {
       }
     }
 
-    const clauses = new Array<Clause>();
+    const clauses = new Array<Sat.Clause>();
     // Encode constraints
     const hasDigit = (row: number, col: number): void => {
       clauses.push(

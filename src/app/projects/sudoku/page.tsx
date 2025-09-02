@@ -1,12 +1,20 @@
 import { NextPage } from "next";
 
 import { SudokuComponent } from "@/components/projects/SudokuComponent";
-import ProjectTemplate from "@/components/ProjectTemplate";
+import {
+  ProjectDescription,
+  ProjectTemplate,
+  ProjectTitle,
+} from "@/components/ProjectTemplate";
 
 const Page: NextPage = () => {
   return (
-    <ProjectTemplate title="Sudoku" description="">
+    <ProjectTemplate>
+      <ProjectTitle>Sudoku</ProjectTitle>
+
       <SudokuComponent />
+
+      <ProjectDescription>TODO</ProjectDescription>
     </ProjectTemplate>
   );
 };

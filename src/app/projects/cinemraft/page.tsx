@@ -1,14 +1,25 @@
 import { NextPage } from "next";
 
 import CineMraftComponent from "@/components/projects/CineMraftComponent";
-import ProjectTemplate from "@/components/ProjectTemplate";
+import {
+  ProjectDescription,
+  ProjectTemplate,
+  ProjectTitle,
+} from "@/components/ProjectTemplate";
 
 import Desc from "./desc.mdx";
 
 const Page: NextPage = () => {
   return (
-    <ProjectTemplate title="CineMraft" description={<Desc />}>
+    <ProjectTemplate>
+      <ProjectTitle>CineMraft</ProjectTitle>
+
       <CineMraftComponent />
+
+      <ProjectDescription>
+        {" "}
+        <Desc />
+      </ProjectDescription>
     </ProjectTemplate>
   );
 };
