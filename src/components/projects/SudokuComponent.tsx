@@ -71,7 +71,7 @@ export const SudokuComponent: FC = () => {
               locked && "font-bold",
             )}
           >
-            {value && value + 1}
+            {value !== undefined && value + 1}
           </div>
         </button>
       );
@@ -172,7 +172,11 @@ export const SudokuComponent: FC = () => {
         </button>
 
         <button onClick={() => setSudoku((sudoku) => sudoku.cheat() ?? sudoku)}>
-          Cheat
+          Solve
+        </button>
+
+        <button onClick={() => setSudoku((sudoku) => sudoku.reset())}>
+          Reset
         </button>
 
         {TILE_VALUES.map((value) => (

@@ -1,5 +1,7 @@
 import assert from "assert";
 
+import * as Sat from "@/lib/sat";
+
 export const TILE_VALUES: SudokuValue[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 export type SudokuValue = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
@@ -142,7 +144,7 @@ export class SudokuState {
     return !this.hasError();
   }
 
-  private encodeBCP(): [Assignments, Clause[]] {
+  private encodeSAT(): [Assignments, Clause[]] {
     const varI = (row: number, col: number, value: number): number => {
       assert(row < 9 && col < 9 && value < 9);
       return (row * 9 + col) * 9 + value;
@@ -213,15 +215,16 @@ export class SudokuState {
       for (let groupCol = 0; groupCol < 3; groupCol++) {
         for (let cellRowA = 0; cellRowA < 3; cellRowA++) {
           for (let cellColA = 0; cellColA < 3; cellColA++) {
-            for (let cellRowB = cellRowA; cellRowB < 3; cellRowB++) {
-              for (let cellColB = cellColA + 1; cellColB < 3; cellColB++) {
+            for (let cellRowB = 0; cellRowB < 3; cellRowB++) {
+              for (let cellColB = 0; cellColB < 3; cellColB++) {
                 const rowA = groupRow * 3 + cellRowA;
                 const colA = groupCol * 3 + cellColA;
 
                 const rowB = groupRow * 3 + cellRowB;
                 const colB = groupCol * 3 + cellColB;
 
-                if (rowA !== rowB || colA !== colB) {
+                // Avoid duplicate constraints
+                if (rowA < rowB || (rowA == rowB && colA < colB)) {
                   differ(rowA, colA, rowB, colB);
                 }
               }
@@ -252,7 +255,7 @@ export class SudokuState {
     return [variables, clauses];
   }
 
-  private static decodeBCP(assignments: Assignments): SudokuValue[] {
+  private static decodeSAT(assignments: Sat.Assignments): SudokuValue[] {
     const varI = (row: number, col: number, value: number): number => {
       return (row * 9 + col) * 9 + value;
     };
@@ -279,124 +282,26 @@ export class SudokuState {
     return tiles;
   }
 
-  cheat(): SudokuState | undefined {
-    const [assignments, clauses] = this.encodeBCP();
+  reset(): SudokuState {
+    return new SudokuState(
+      this.tiles.map((value, i) => (this.locked[i] ? value : undefined)),
+      this.locked,
+      new Array(81).fill(new Array(9).fill(false)),
+    );
+  }
 
-    const result = binaryConstraintPropagation(assignments, clauses);
-    if (result === undefined) {
+  cheat(): SudokuState | undefined {
+    const [assignments, clauses] = this.encodeSAT();
+
+    const newAssignments = Sat.dpll(assignments, clauses);
+    if (newAssignments === undefined) {
       return undefined;
     }
 
-    const [newAssignments] = result;
-
     return new SudokuState(
-      SudokuState.decodeBCP(newAssignments),
+      SudokuState.decodeSAT(newAssignments),
       this.locked,
       this.annotations,
     );
   }
 }
-
-type Assignments = readonly (boolean | undefined)[];
-type Clause = Map<number, boolean>;
-
-/**
- * Binary constraint propagation of logic in CNF form.
- * Ex. `(~a or b or c) and (~b or ~c)` where `(~b or ~c)` is a clause.
- */
-export function binaryConstraintPropagation(
-  assignments_: readonly (boolean | undefined)[],
-  clauses_: readonly Clause[],
-): [Assignments, Clause[]] | undefined {
-  const assignments = assignments_.slice();
-  const clauses: (Clause | undefined)[] = clauses_.map(
-    (clause) => new Map(clause),
-  );
-  const varClauses: Map<number, Set<number>> = new Map(
-    assignments.map((_, i) => [i, new Set<number>()]),
-  );
-
-  for (let clauseI = 0; clauseI < clauses_.length; clauseI++) {
-    const clause = clauses_[clauseI];
-    for (const variable of clause.keys()) {
-      varClauses.get(variable)!.add(clauseI);
-    }
-  }
-
-  const queue = new Array<number>();
-  for (let variableI = 0; variableI < assignments.length; variableI++) {
-    const assignment = assignments[variableI];
-    if (assignment !== undefined) {
-      queue.push(variableI);
-    }
-  }
-
-  while (queue.length > 0) {
-    const variable = queue.pop()!;
-    const value = assignments[variable]!;
-
-    for (const clauseI of varClauses.get(variable)!) {
-      const clause = clauses[clauseI];
-
-      if (clause !== undefined) {
-        const negated = clause.get(variable)!;
-        const satisfied = value !== negated;
-
-        if (satisfied) {
-          clauses[clauseI] = undefined;
-        } else {
-          clause.delete(variable);
-
-          if (clause.size === 0) {
-            // No solution
-            return undefined;
-          } else if (clause.size === 1) {
-            const [lastVariable, lastNegated] = clause.entries().next().value!;
-            const derivedValue = !lastNegated;
-
-            if (assignments[lastVariable] === undefined) {
-              assignments[lastVariable] = derivedValue;
-              queue.push(lastVariable);
-            } else if (assignments[lastVariable] !== derivedValue) {
-              // Conflict
-              return undefined;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  const newClauses = clauses
-    .values()
-    .filter((clause) => clause !== undefined)
-    .toArray();
-  return [assignments, newClauses];
-}
-//
-// function dpll(
-//   assignments_: Assignments,
-//   clauses_: readonly Clause[],
-// ): Assignments | undefined {
-//   const result = binaryConstraintPropagation(assignments_, clauses_);
-//
-//   if (result === undefined) {
-//     return undefined;
-//   }
-//
-//   const [assignments, clauses] = result;
-//
-//   if (clauses.length === 0) {
-//     return assignments;
-//   }
-//
-//   const variable = assignments.findIndex((v) => v === undefined);
-//   assert(
-//     variable !== -1,
-//     "If all variables are assigned then there should be no clauses left.",
-//   );
-//
-//   const dpllTrue = dpll(assignments.with(variable, true), clauses);
-//   if (dpllTrue !== undefined) return dpllTrue;
-//   return dpll(assignments.with(variable, false), clauses);
-// }
