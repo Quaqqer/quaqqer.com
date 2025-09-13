@@ -6,6 +6,7 @@ import IMAGE_GOL from "@pub/img/gol_article.png";
 import IMAGE_NEMU from "@pub/img/nemu_article.png";
 import IMAGE_SAFT from "@pub/img/saft_article.jpeg";
 import IMAGE_SNAKE from "@pub/img/snake_article.png";
+import IMAGE_SUDOKU from "@pub/img/sudoku.jpg";
 import IMAGE_TETRIS from "@pub/img/tetris_article.jpeg";
 import clsx from "clsx";
 import Image, { StaticImageData } from "next/image";
@@ -54,7 +55,7 @@ export const projects: Project[] = [
   {
     name: "Sudoku",
     description: "A sudoku game with a solver",
-    image: IMAGE_TETRIS,
+    image: IMAGE_SUDOKU,
     date: "2025-09-01",
     href: "/projects/sudoku",
     demo: "/projects/sudoku",
