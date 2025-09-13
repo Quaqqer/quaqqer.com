@@ -12,24 +12,7 @@ import {
 } from "@/lib/projects/sudoku/Sudoku";
 
 export const SudokuComponent: FC = () => {
-  const [sudoku, setSudoku] = useState(() => {
-    const _ = undefined;
-    return SudokuState.empty();
-    // // prettier-ignore
-    // return SudokuState.fromPreset([
-    //   _, _, _,  1, 5, _,  6, _, 0,
-    //   5, 7, _,  _, 6, _,  _, 8, _,
-    //   0, 8, _,  _, _, 3,  4, _, _,
-    //
-    //   7, 1, _,  0, _, _,  _, 3, _,
-    //   _, _, 3,  5, _, 1,  8, _, _,
-    //   _, 4, _,  _, _, 2,  _, 1, 7,
-    //
-    //   _, _, 8,  2, _, _,  _, 6, 3,
-    //   _, 3, _,  _, 4, _,  _, 2, 5,
-    //   6, _, 2,  _, 0, 7,  _, _, _,
-    // ]);
-  });
+  const [sudoku, setSudoku] = useState(() => SudokuState.empty());
   const warnings = sudoku.erroneousTiles();
   const [selectedTile, setSelectedTile] = useState<number | undefined>(
     undefined,
