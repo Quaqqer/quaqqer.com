@@ -1,6 +1,6 @@
 import assert from "assert";
 
-import * as Sat from "@/lib/sat";
+import * as Sat from "@/lib/algorithm/sat";
 
 export class SuguruState {
   private rows: number;

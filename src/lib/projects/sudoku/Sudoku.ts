@@ -1,4 +1,4 @@
-import * as Sat from "@/lib/sat";
+import * as Sat from "@/lib/algorithm/sat";
 
 export const TILE_VALUES: SudokuValue[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 export type SudokuValue = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
