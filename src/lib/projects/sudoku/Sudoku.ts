@@ -36,6 +36,22 @@ export class SudokuState {
     return SudokuState.fromPreset(new Array(81).fill(undefined));
   }
 
+  public static example(): SudokuState {
+    const _ = undefined;
+    // prettier-ignore
+    return SudokuState.fromPreset([
+      _, _, 7, _, 4, _, 2, _, 0,
+      _, _, 4, 8, _, _, _, 6, _,
+      1, _, _, _, _, 2, _, 5, _,
+      _, _, 6, 1, _, _, 3, _, 2,
+      4, 5, _, 0, _, 7, _, _, _,
+      _, 1, 0, _, _, _, 4, _, _,
+      _, _, _, _, 8, 1, _, _, _,
+      2, 6, _, 3, 0, _, 1, _, _,
+      0, _, _, 4, _, _, _, 2, 8,
+    ]);
+  }
+
   public lock(): SudokuState {
     return new SudokuState(
       this.tiles,
