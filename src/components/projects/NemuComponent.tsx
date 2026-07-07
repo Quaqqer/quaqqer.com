@@ -1,15 +1,10 @@
 "use client";
 
-// import { Controller, Nemu } from "nemu";
-import initNemu, { Controller, Nemu } from "nemu";
-import { useEffect, useMemo, useState } from "react";
+import { type Controller, type Nemu } from "@quaqqer/nemu-wasm";
+import { FC, useEffect, useMemo, useState } from "react";
 import { MdFullscreen } from "react-icons/md";
 
 import Button from "../Button";
-
-if (typeof window !== "undefined") {
-  await initNemu("/nemu_wasm_bg.wasm");
-}
 
 const keyMap = {
   z: "b",
@@ -23,6 +18,23 @@ const keyMap = {
 } as const;
 
 export default function NemuComponent() {
+  const [NemuWasm, setNemuWasm] = useState<
+    typeof import("@quaqqer/nemu-wasm") | undefined
+  >();
+
+  useEffect(() => {
+    import("@quaqqer/nemu-wasm").then(setNemuWasm);
+  }, [setNemuWasm]);
+
+  if (NemuWasm !== undefined) {
+    return <Inner NemuWasm={NemuWasm} />;
+  }
+}
+
+const Inner: FC<{ NemuWasm: typeof import("@quaqqer/nemu-wasm") }> = ({
+  NemuWasm,
+}) => {
+  const { Nemu, Controller } = NemuWasm;
   const [romInputRef, setRomInputRef] = useState<HTMLInputElement | null>(null);
   const [canvasRef, setCanvasRef] = useState<HTMLCanvasElement | null>(null);
   const [rom, setRom] = useState<Uint8Array | undefined>();
@@ -48,7 +60,7 @@ export default function NemuComponent() {
   }, [canvasRef]);
 
   const emulator = useMemo(() => {
-    let emu: import("nemu").Nemu | undefined = undefined;
+    let emu: Nemu | undefined = undefined;
 
     if (rom) {
       try {
@@ -170,4 +182,4 @@ export default function NemuComponent() {
       </div>
     </div>
   );
-}
+};
