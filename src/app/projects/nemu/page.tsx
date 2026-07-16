@@ -8,17 +8,14 @@ import {
 } from "@/components/ProjectTemplate";
 
 import Desc from "./desc.mdx";
-
-const NemuComponent = React.lazy(
-  () => import("@/components/projects/NemuComponent"),
-);
+import NemuEmulator from "./emulator";
 
 const Page: NextPage = () => {
   return (
     <ProjectTemplate>
       <ProjectTitle>Nemu</ProjectTitle>
 
-      <NemuComponent />
+      <NemuEmulator />
 
       <ProjectDescription>
         <Desc />

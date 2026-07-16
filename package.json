@@ -15,7 +15,7 @@
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.2.2",
     "@preact/signals-react": "^3.0.1",
-    "@quaqqer/nemu-wasm": "^0.1.0",
+    "@quaqqer/nemu-react": "^0.1.1",
     "alea": "^1.0.1",
     "chai": "^5.1.1",
     "clsx": "^2.1.1",
